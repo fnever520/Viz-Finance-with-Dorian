@@ -1,0 +1,31 @@
+# General
+.DS_Store
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+
+# Misc
+#ngram_handling.py
+
+# temporary csv files
+*.csv
+
+# logs
+*.log
+
+# input dataset / model
+
+
+# Distribution / packaging
+.Python
+build
+dist/
+downloads/
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
