@@ -12,6 +12,7 @@ parser.add_argument('--symbols', '-s', type=str, required=True)
 all_args = parser.parse_args()
 symbols = all_args.symbols
 
+# turn the tickers into a list and feed into the function
 symbols = [str(item) for item in symbols.split(',')]
 
 folder = r'./fabianStocks/'
