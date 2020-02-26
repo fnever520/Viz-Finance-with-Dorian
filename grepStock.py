@@ -6,18 +6,20 @@ from pandas import DataFrame
 import pandas_datareader.data as web
 import os
 
-parser = argparse.ArgumentParser(description="grep stock price")
-parser.add_argument('--symbols', '-s', type=str, required=True, help="tickers symbols for the stock")
-parser.add_argument('--collected-years', '-y', type=int, default = 1, help="dimensionality of hidden layers (default: 64)")
+# This python file is to query the securities and download selected data
+
+parser = argparse.ArgumentParser(description="This python file is to grep stock's OHLC and volume")
+parser.add_argument('--symbols',      '-s', type=str, required=True, help="tickers symbols for the securities")
+parser.add_argument('--traced-years', '-y', type=int, default = 1,   help="years to be traced back")
 
 all_args = parser.parse_args()
 symbols = all_args.symbols
-year = all_args.collected_years
+years = all_args.traced_years
 
 # turn the tickers into a list and feed into the function
 symbols = [str(item) for item in symbols.split(',')]
 
-folder = r'./fabianStocks/'
+folder = r'./fabianWatchlist/'
 if not os.path.exists(folder):
     os.makedirs(folder)
 
@@ -45,7 +47,7 @@ if __name__ == '__main__':
     workers = min(max_workers, len(symbols))
 
     now_time = datetime.now()
-    start_time = datetime(now_time.year - year, now_time.month , now_time.day)    
+    start_time = datetime(now_time.year - years, now_time.month , now_time.day)    
 
     with futures.ThreadPoolExecutor(workers) as executor:
         res = executor.map(download_stock, symbols)
