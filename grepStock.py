@@ -7,10 +7,12 @@ import pandas_datareader.data as web
 import os
 
 parser = argparse.ArgumentParser(description="grep stock price")
-parser.add_argument('--symbols', '-s', type=str, required=True)
+parser.add_argument('--symbols', '-s', type=str, required=True, help="tickers symbols for the stock")
+parser.add_argument('--collected-years', '-y', type=int, default = 1, help="dimensionality of hidden layers (default: 64)")
 
 all_args = parser.parse_args()
 symbols = all_args.symbols
+year = all_args.collected_years
 
 # turn the tickers into a list and feed into the function
 symbols = [str(item) for item in symbols.split(',')]
@@ -22,7 +24,7 @@ if not os.path.exists(folder):
 def download_stock(stock):
     try:
         print(stock)
-        stock_df = web.DataReader(stock, 'yahoo')
+        stock_df = web.DataReader(stock, 'yahoo', start_time, now_time)
         stock_df['Name'] = stock
         output_name = stock + '_data.csv'
         stock_df.to_csv(folder + output_name)
@@ -32,6 +34,7 @@ def download_stock(stock):
 
 if __name__ == '__main__':
     # symbols = ['TSLA']
+
     bad_names = [] # placeholder
     '''
     use concurrent.futures module's ThreadPoolExecutor to speed up the downloads by doing them in parallel as opposoed to sequentially
@@ -40,7 +43,10 @@ if __name__ == '__main__':
     # set the maximum thread number
     max_workers = 50
     workers = min(max_workers, len(symbols))
-    
+
+    now_time = datetime.now()
+    start_time = datetime(now_time.year - year, now_time.month , now_time.day)    
+
     with futures.ThreadPoolExecutor(workers) as executor:
         res = executor.map(download_stock, symbols)
 
