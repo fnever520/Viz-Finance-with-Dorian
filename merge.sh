@@ -2,7 +2,7 @@
 
 echo "Date,High,Low,Open,Close,Volume,Adj Close,Name" > all_stocks.csv
 #cd individual_stocks_5yr
-files=$(ls ./fabianStocks/*.csv)
+files=$(ls ./fabianWatchlist/*.csv)
 for file in $files
 do
 	tail -n +2 $file >> all_stocks.csv
