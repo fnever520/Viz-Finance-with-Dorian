@@ -1,2 +1,2 @@
-# Viz Finance (minor modifed by Fabian)
+# Viz Finance (modifed by Fabian)
  Code used in the "Viz Finance with Dorian" weekly project
